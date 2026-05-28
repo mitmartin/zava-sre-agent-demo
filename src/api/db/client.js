@@ -32,9 +32,9 @@ const pool = new Pool({
   // verification works out-of-the-box. Set DB_SSL_REJECT_UNAUTHORIZED=false
   // only for local/dev scenarios with a self-signed cert.
   ssl: { rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== 'false' },
-  max: 10,
+  max: 2,                              // cost: reduce idle PG connections
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 30000,      // tolerate slow cold-start auth
 });
 
 pool.on('error', (err) => {
